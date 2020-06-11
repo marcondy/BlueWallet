@@ -148,9 +148,13 @@ module.exports.getConfig = async function () {
   return {
     host: mainClient.host,
     port: mainClient.port,
-    status: mainClient.status && mainConnected ? 1 : 0,
+    status: mainConnected ? 1 : 0,
     serverName,
   };
+};
+
+module.exports.getSecondsSinceLastRequest = function () {
+  return mainClient && mainClient.timeLastCall ? (+new Date() - mainClient.timeLastCall) / 1000 : -1;
 };
 
 /**
